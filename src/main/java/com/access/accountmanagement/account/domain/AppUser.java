@@ -1,4 +1,4 @@
-package com.access.accountmanagement.domain;
+package com.access.accountmanagement.account.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

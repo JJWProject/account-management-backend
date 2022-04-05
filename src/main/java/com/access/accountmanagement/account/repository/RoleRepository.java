@@ -1,6 +1,6 @@
-package com.access.accountmanagement.repository;
+package com.access.accountmanagement.account.repository;
 
-import com.access.accountmanagement.domain.Role;
+import com.access.accountmanagement.account.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
