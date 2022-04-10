@@ -16,9 +16,16 @@ import java.util.List;
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "NAME")
     private String name;
+
+    @Column(name = "USERNAME", unique = true)
     private String userName;
+
+    @Column(name = "PASSWORD")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

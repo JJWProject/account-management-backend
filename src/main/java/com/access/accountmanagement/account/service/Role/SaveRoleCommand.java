@@ -11,7 +11,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public record SaveRoleCommand(RoleRepository roleRepository) implements SaveCommand<Role> {
+public class SaveRoleCommand implements SaveCommand<Role> {
+
+    private final RoleRepository roleRepository;
 
     @Override
     public Role execute(Role variable) {

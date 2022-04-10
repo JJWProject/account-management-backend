@@ -11,7 +11,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public record SaveAppUserCommand(AppUserRepository appUserRepository) implements SaveCommand<AppUser> {
+public class SaveAppUserCommand implements SaveCommand<AppUser> {
+
+    private final AppUserRepository appUserRepository;
 
     @Override
     public AppUser execute(AppUser variable) {

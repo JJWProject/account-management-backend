@@ -11,7 +11,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public record GetRoleByNameCommand(RoleRepository roleRepository) implements GetCommand<Role, String> {
+public class GetRoleByNameCommand implements GetCommand<Role, String> {
+
+    private final RoleRepository roleRepository;
 
     @Override
     public Role execute(String parameter) {

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    # All settings here is only for local testing
+    # change password of mysql schema here
+    url: jdbc:mysql://localhost:3306/account_management
+    # change user name of mysql db here
+    username: root
+    # change password of mysql db here
+    password: password
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true

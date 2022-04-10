@@ -11,7 +11,9 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public record GetAppUserByUserNameCommand(AppUserRepository appUserRepository) implements GetCommand<AppUser, String> {
+public class GetAppUserByUserNameCommand implements GetCommand<AppUser, String> {
+
+    private final AppUserRepository appUserRepository;
 
     @Override
     public AppUser execute(String parameter) {
