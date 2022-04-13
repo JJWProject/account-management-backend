@@ -1,14 +1,17 @@
 spring:
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
+    # driverClassName: com.mysql.jdbc.Driver
     # All settings here is only for local testing
     # change password of mysql schema here
-    url: jdbc:mysql://localhost:3306/account_management
+    url: jdbc:postgresql://localhost:5432/accountmanagement
     # change user name of mysql db here
-    username: root
+    username: postgres
     # change password of mysql db here
     password: password
   jpa:
-    hibernate.ddl-auto: update
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQL81Dialect
+      format_sql: true
     generate-ddl: true
     show-sql: true
