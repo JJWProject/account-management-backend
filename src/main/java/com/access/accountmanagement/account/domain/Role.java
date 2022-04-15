@@ -3,6 +3,7 @@ package com.access.accountmanagement.account.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

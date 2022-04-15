@@ -1,4 +1,4 @@
-package com.access.accountmanagement.account.service.AppUser;
+package com.access.accountmanagement.account.service.basecommands.AppUser;
 
 import com.access.accountmanagement.account.domain.AppUser;
 import com.access.accountmanagement.account.repository.AppUserRepository;
@@ -10,12 +10,12 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DeleteAppUserCommandImpl implements DeleteAppUserCommand {
+public class GetAppUserByUserNameCommandImpl implements GetAppUserByUserNameCommand {
 
     private final AppUserRepository appUserRepository;
 
     @Override
-    public void execute(AppUser object) {
-        appUserRepository.delete(object);
+    public AppUser execute(String parameter) {
+        return appUserRepository.findByUsername(parameter);
     }
 }

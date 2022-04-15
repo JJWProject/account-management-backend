@@ -1,4 +1,4 @@
-package com.access.accountmanagement.account.service.Role;
+package com.access.accountmanagement.account.service.basecommands.Role;
 
 import com.access.accountmanagement.account.domain.Role;
 import com.access.accountmanagement.account.repository.RoleRepository;
@@ -10,12 +10,12 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DeleteRoleCommandImpl implements DeleteRoleCommand {
+public class SaveRoleCommandImpl implements SaveRoleCommand {
 
     private final RoleRepository roleRepository;
 
     @Override
-    public void execute(Role object) {
-        roleRepository.delete(object);
+    public Role execute(Role variable) {
+        return roleRepository.save(variable);
     }
 }

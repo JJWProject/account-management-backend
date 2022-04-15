@@ -1,4 +1,4 @@
-package com.access.accountmanagement.account.service.Role;
+package com.access.accountmanagement.account.service.basecommands.Role;
 
 import com.access.accountmanagement.account.domain.Role;
 import com.access.accountmanagement.genericCommands.GetCommand;
