@@ -6,18 +6,14 @@ import com.access.accountmanagement.account.dto.user.CreateUserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel="spring")
 public interface AppUserMapper {
 
-    @Mapping(target = "roles", source = "roleDtos")
     AppUser toEntityFromAppUserDto(AppUserDto appUserDto);
 
-    @Mapping(target = "roleDtos", source = "roles")
     AppUserDto toDTOToAppUserDto(AppUser appUser);
 
-    @Mapping(target = "roles", source = "roleDtos")
     AppUser toEntityFromCreateUserDto(CreateUserDto createUserDto);
 
-    @Mapping(target = "roleDtos", source = "roles")
     CreateUserDto toDTOToCreateUserDto(AppUser appUser);
 }
