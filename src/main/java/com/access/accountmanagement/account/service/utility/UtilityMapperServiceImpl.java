@@ -7,19 +7,17 @@ import com.access.accountmanagement.account.dto.user.AppUserDto;
 import com.access.accountmanagement.account.dto.user.CreateUserDto;
 import com.access.accountmanagement.account.mapper.AppUserMapper;
 import com.access.accountmanagement.account.mapper.RoleMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UtilityMapperServiceImpl implements UtilityMapperService{
 
-    @Autowired
-    private AppUserMapper appUserMapper;
-
-    @Autowired
-    private RoleMapper roleMapper;
+    private final AppUserMapper appUserMapper;
+    private final RoleMapper roleMapper;
 
     @Override
     public AppUser toEntityFromDto(CreateUserDto createUserDto) {
