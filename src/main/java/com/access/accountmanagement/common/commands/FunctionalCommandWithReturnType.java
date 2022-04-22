@@ -1,4 +1,4 @@
-package com.access.accountmanagement.common.genericCommands;
+package com.access.accountmanagement.common.commands;
 
 @FunctionalInterface
 public interface FunctionalCommandWithReturnType<T,R> {

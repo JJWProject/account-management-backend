@@ -1,4 +1,4 @@
-package com.access.accountmanagement.common.genericEntity;
+package com.access.accountmanagement.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
