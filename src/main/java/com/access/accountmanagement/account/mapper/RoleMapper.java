@@ -6,14 +6,10 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel="spring")
+@Mapper
 public interface RoleMapper {
 
     Role toEntity(RoleDto roleDto);
 
-    List<Role> toEntityList(List<RoleDto> roleDtoList);
-
     RoleDto toDto(Role role);
-
-    List<RoleDto> toDtoList(List<Role> roleList);
 }

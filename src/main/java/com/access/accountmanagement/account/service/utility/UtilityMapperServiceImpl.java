@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,8 @@ public class UtilityMapperServiceImpl implements UtilityMapperService{
     public AppUser toEntityFromDto(CreateUserDto createUserDto) {
         AppUser appUser = appUserMapper.toEntityFromCreateUserDto(createUserDto);
         List<RoleDto> roleDtoList = createUserDto.getRoleDtos();
-        List<Role> roleList = roleMapper.toEntityList(roleDtoList);
+        List<Role> roleList = roleDtoList.stream().map(roleDto->roleMapper.toEntity(roleDto))
+                .collect(Collectors.toList());
         appUser.setRoles(roleList);
         return appUser;
     }
@@ -32,7 +34,8 @@ public class UtilityMapperServiceImpl implements UtilityMapperService{
     public AppUser toEntityFromDto(AppUserDto appUserDto) {
         AppUser appUser = appUserMapper.toEntityFromAppUserDto(appUserDto);
         List<RoleDto> roleDtoList = appUserDto.getRoleDtos();
-        List<Role> roleList = roleMapper.toEntityList(roleDtoList);
+        List<Role> roleList = roleDtoList.stream().map(roleDto->roleMapper.toEntity(roleDto))
+                .collect(Collectors.toList());
         appUser.setRoles(roleList);
         return appUser;
     }
@@ -41,7 +44,8 @@ public class UtilityMapperServiceImpl implements UtilityMapperService{
     public CreateUserDto toCreateUserDtoFromAppUser(AppUser appUser) {
         CreateUserDto createUserDto = appUserMapper.toDTOToCreateUserDto(appUser);
         List<Role> roleList = appUser.getRoles();
-        List<RoleDto> roleDtoList = roleMapper.toDtoList(roleList);
+        List<RoleDto> roleDtoList = roleList.stream().map(role->roleMapper.toDto(role))
+                .collect(Collectors.toList());
         createUserDto.setRoleDtos(roleDtoList);
         return createUserDto;
     }
@@ -50,7 +54,8 @@ public class UtilityMapperServiceImpl implements UtilityMapperService{
     public AppUserDto toAppUserDtoFromAppUser(AppUser appUser) {
         AppUserDto appUserDto = appUserMapper.toDTOToAppUserDto(appUser);
         List<Role> roleList = appUser.getRoles();
-        List<RoleDto> roleDtoList = roleMapper.toDtoList(roleList);
+        List<RoleDto> roleDtoList = roleList.stream().map(role->roleMapper.toDto(role))
+                .collect(Collectors.toList());
         appUserDto.setRoleDtos(roleDtoList);
         return appUserDto;
     }
