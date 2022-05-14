@@ -2,8 +2,10 @@ package com.access.accountmanagement.authentication.security;
 
 import com.access.accountmanagement.authentication.filter.CustomAuthenticationFilter;
 import com.access.accountmanagement.authentication.filter.CustomAuthorizationFilter;
+import com.access.accountmanagement.authentication.service.jwt.GenerateJwtCommand;
 import com.access.accountmanagement.common.constants.AccountConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private GenerateJwtCommand generateJwtCommand;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -37,11 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(),generateJwtCommand);
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.cors().configurationSource(configurationSource()).and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/login").permitAll();
+        http.authorizeRequests().antMatchers("/api/login","/api/security/refresh").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/appuser/common").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/appuser/**").hasAnyAuthority(AccountConstants.ADMIN_ROLE);
         http.authorizeRequests().anyRequest().authenticated();
