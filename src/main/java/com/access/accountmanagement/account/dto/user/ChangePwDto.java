@@ -10,6 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ChangePwDto {
-    private Long id;
-    private String password;
+    private String userName;
+    private String oldPassword;
+    private String newPassword;
 }
