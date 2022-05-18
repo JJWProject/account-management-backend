@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -30,6 +31,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @PropertySource(value = {"classpath:application.yml"})
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
+    List<String> listOfNoAuthorizationPath = Arrays.asList(
+        "/api/appuser/common",
+        "/api/login",
+        "/api/security/refresh"
+    );
+
     @Autowired
     private VerifyJwtCommand verifyJwtCommand;
 
@@ -38,7 +45,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/security/refresh")){
+        if(listOfNoAuthorizationPath.contains(request.getServletPath())){
             filterChain.doFilter(request,response);
         } else {
             String authorizationHeader = request.getHeader(header);
