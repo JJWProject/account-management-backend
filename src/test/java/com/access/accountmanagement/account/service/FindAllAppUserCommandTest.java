@@ -23,7 +23,6 @@ public class FindAllAppUserCommandTest {
 
     @Test
     void FindAllAppUserCommand_ExecuteTest(){
-        String password = "P@ssw0rd";
         List<AppUserDto> result = findAllAppUserCommand.execute();
 
         Assertions.assertNotNull(result);

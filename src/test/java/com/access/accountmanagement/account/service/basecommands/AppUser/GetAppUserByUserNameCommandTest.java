@@ -52,8 +52,8 @@ public class GetAppUserByUserNameCommandTest {
         }
 
         Assertions.assertNotNull(result);
-        if(result.getId().equals(2L)){
-            Assertions.assertEquals(2L,result.getId());
+        if(result.getId().equals(6L)){
+            Assertions.assertEquals(6L,result.getId());
         }else {
             Assertions.assertEquals(1L,result.getId());
         }
