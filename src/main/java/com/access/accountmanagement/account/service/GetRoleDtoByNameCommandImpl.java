@@ -1,7 +1,8 @@
-package com.access.accountmanagement.account.service.basecommands.Role;
+package com.access.accountmanagement.account.service;
 
 import com.access.accountmanagement.account.dto.RoleDto;
 import com.access.accountmanagement.account.mapper.RoleMapper;
+import com.access.accountmanagement.account.service.basecommands.Role.GetRoleByNameCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

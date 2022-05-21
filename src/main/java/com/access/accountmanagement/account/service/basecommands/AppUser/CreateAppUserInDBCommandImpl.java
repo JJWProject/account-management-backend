@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SaveAppUserCommandImpl implements SaveAppUserCommand {
+public class CreateAppUserInDBCommandImpl implements CreateAppUserInDBCommand {
 
     private final AppUserRepository appUserRepository;
 

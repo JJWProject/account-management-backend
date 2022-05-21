@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SaveRoleCommandImpl implements SaveRoleCommand {
+public class CreateRoleInDBCommandImpl implements CreateRoleInDBCommand {
 
     private final RoleRepository roleRepository;
 

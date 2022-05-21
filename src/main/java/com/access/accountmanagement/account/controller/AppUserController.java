@@ -1,13 +1,11 @@
 package com.access.accountmanagement.account.controller;
 
-import com.access.accountmanagement.account.domain.Role;
 import com.access.accountmanagement.account.dto.RoleDto;
 import com.access.accountmanagement.account.dto.user.AppUserDto;
 import com.access.accountmanagement.account.dto.user.CreateUserDto;
 import com.access.accountmanagement.account.service.CreateUserCommand;
-import com.access.accountmanagement.account.service.basecommands.AppUser.FindAllAppUserCommand;
-import com.access.accountmanagement.account.service.basecommands.Role.GetRoleByNameCommand;
-import com.access.accountmanagement.account.service.basecommands.Role.GetRoleDtoByNameCommand;
+import com.access.accountmanagement.account.service.FindAllAppUserCommand;
+import com.access.accountmanagement.account.service.GetRoleDtoByNameCommand;
 import com.access.accountmanagement.common.constants.AccountConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

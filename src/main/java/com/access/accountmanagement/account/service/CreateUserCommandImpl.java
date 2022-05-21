@@ -3,7 +3,7 @@ package com.access.accountmanagement.account.service;
 import com.access.accountmanagement.account.domain.AppUser;
 import com.access.accountmanagement.account.dto.user.AppUserDto;
 import com.access.accountmanagement.account.dto.user.CreateUserDto;
-import com.access.accountmanagement.account.service.basecommands.AppUser.SaveAppUserCommand;
+import com.access.accountmanagement.account.service.basecommands.AppUser.CreateAppUserInDBCommand;
 import com.access.accountmanagement.account.service.utility.UtilityMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 public class CreateUserCommandImpl implements CreateUserCommand{
 
     private final UtilityMapperService utilityMapperService;
-    private final SaveAppUserCommand saveAppUserCommand;
+    private final CreateAppUserInDBCommand saveAppUserCommand;
 
     @Override
     public AppUserDto execute(CreateUserDto variable) {
