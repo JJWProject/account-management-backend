@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,19 +32,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     private final GenerateJwtCommand generateJwtCommand;
 
     public CustomAuthenticationFilter(
-        AuthenticationManager authenticationManager,
-        GenerateJwtCommand generateJwtCommand
-    ){
+            AuthenticationManager authenticationManager,
+            GenerateJwtCommand generateJwtCommand
+    ) {
         this.authenticationManager = authenticationManager;
         this.generateJwtCommand = generateJwtCommand;
     }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException
-    {
+            throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -56,6 +57,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     ) throws IOException {
         User user = (User) authentication.getPrincipal();
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(),generateJwtCommand.execute(user,request));
+        Map<String, String> jwtMap = generateJwtCommand.execute(user, request);
+        Cookie cookie = new Cookie("RefreshToken", jwtMap.get("refresh_token"));
+        response.addCookie(cookie);
+        jwtMap.remove("refresh_token");
+        new ObjectMapper().writeValue(response.getOutputStream(), jwtMap);
     }
 }

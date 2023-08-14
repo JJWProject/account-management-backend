@@ -3,6 +3,7 @@ package com.access.accountmanagement.account.controller;
 import com.access.accountmanagement.account.dto.RoleDto;
 import com.access.accountmanagement.account.mapper.RoleMapper;
 import com.access.accountmanagement.account.service.CreateRoleCommand;
+import com.access.accountmanagement.common.constants.AccountConstants;
 import com.access.accountmanagement.common.enums.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class RoleController {
     private CreateRoleCommand createRoleCommand;
 
     @PostMapping("/")
-//    @RolesAllowed(ApplicationUserRole.ADMIN)
+    @RolesAllowed(AccountConstants.ADMIN_ROLE)
     public ResponseEntity<RoleDto> createRole(@Valid @RequestBody RoleDto roleDto){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(createRoleCommand.execute(roleDto));

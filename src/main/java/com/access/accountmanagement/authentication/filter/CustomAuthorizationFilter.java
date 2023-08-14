@@ -1,6 +1,7 @@
 package com.access.accountmanagement.authentication.filter;
 
 import com.access.accountmanagement.authentication.service.jwt.VerifyJwtCommand;
+import com.access.accountmanagement.authentication.service.jwt.VerifyJwtCommandImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -32,46 +33,45 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     List<String> listOfNoAuthorizationPath = Arrays.asList(
-        "/api/appuser/common",
-        "/api/login",
-        "/api/security/refresh"
+            "/api/appuser/common",
+            "/api/login",
+            "/api/security/refresh"
     );
 
-    @Autowired
-    private VerifyJwtCommand verifyJwtCommand;
+    private VerifyJwtCommand verifyJwtCommand = new VerifyJwtCommandImpl();
 
     @Value("${jwt.header}")
     private String header;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(listOfNoAuthorizationPath.contains(request.getServletPath())){
-            filterChain.doFilter(request,response);
+        if (listOfNoAuthorizationPath.contains(request.getServletPath())) {
+            filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(header);
-            if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
-                try{
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                try {
                     DecodedJWT decodedJWT = verifyJwtCommand.execute(authorizationHeader);
                     String username = decodedJWT.getSubject();
                     List<String> roleList = Arrays.asList(decodedJWT.getClaim("roles").asArray(String.class));
                     Collection<SimpleGrantedAuthority> authorityCollection = new ArrayList<>();
-                    roleList.forEach(role->{
+                    roleList.forEach(role -> {
                         authorityCollection.add(new SimpleGrantedAuthority(role));
                     });
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,null, authorityCollection);
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorityCollection);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    filterChain.doFilter(request,response);
+                    filterChain.doFilter(request, response);
                 } catch (Exception exception) {
                     log.error("Error loggin in:{}", exception.getMessage());
-                    response.setHeader("error",exception.getMessage());
+                    response.setHeader("error", exception.getMessage());
                     response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
-                    error.put("error_message",exception.getMessage());
+                    error.put("error_message", exception.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
-                    new ObjectMapper().writeValue(response.getOutputStream(),error);
+                    new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
             } else {
-                filterChain.doFilter(request,response);
+                filterChain.doFilter(request, response);
             }
         }
     }
