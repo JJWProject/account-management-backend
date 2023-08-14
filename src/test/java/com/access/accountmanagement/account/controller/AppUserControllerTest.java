@@ -3,6 +3,7 @@ package com.access.accountmanagement.account.controller;
 import com.access.accountmanagement.AccountmanagementApplication;
 import com.access.accountmanagement.account.dto.user.AppUserDto;
 import com.access.accountmanagement.account.dto.user.CreateUserDto;
+import com.access.accountmanagement.account.exception.classes.UserNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class AppUserControllerTest {
     }
 
     @Test
-    void AppUserController_getAllAppUser_SuccessTest(){
+    void AppUserController_getAllAppUser_SuccessTest() throws UserNotFoundException {
         List<AppUserDto> appUserDtoList = appUserController.getAllAppUser().getBody();
         Assertions.assertNotNull(appUserDtoList);
         if(appUserDtoList.size() == 2){

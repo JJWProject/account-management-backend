@@ -1,5 +1,6 @@
 package com.access.accountmanagement.account.exception;
 
+import com.access.accountmanagement.account.exception.classes.UserNotFoundException;
 import com.access.accountmanagement.common.entity.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,21 @@ import java.util.Date;
 @ControllerAdvice
 public class AccountExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private ErrorMessage convertExceptionToCommonErrorMessage(String errorMessageDescription){
+        return new ErrorMessage(new Date(), errorMessageDescription);
+    }
+
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleAnyException(Exception ex, WebRequest request) {
         String errorMessageDescription = ex.getLocalizedMessage();
-        if(errorMessageDescription == null) errorMessageDescription = ex.toString();
 
-        ErrorMessage errorMessage = new ErrorMessage(new Date(), errorMessageDescription);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(convertExceptionToCommonErrorMessage(errorMessageDescription));
+    }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+    @ExceptionHandler(value = UserNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleUserNotFoundException(UserNotFoundException userNotFoundException){
+        String errorMessageDescription = userNotFoundException.getLocalizedMessage();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(convertExceptionToCommonErrorMessage(errorMessageDescription));
     }
 }
